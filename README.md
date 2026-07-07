@@ -1,5 +1,8 @@
 # Hearth
 
+[![Latest Release](https://img.shields.io/github/v/release/pawel2jarzembowski-oss/hearth)](https://github.com/pawel2jarzembowski-oss/hearth/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A local-first coding agent for VS Code — like Claude Code, but it lives at home. Hearth runs on your own [Ollama](https://ollama.com) model by default (no API key, nothing leaves your machine), with an optional one-click switch to a cloud OpenAI-compatible provider when you want a stronger model.
 
 It uses a Claude-Code-style agentic loop: the model reads files, writes files, and runs commands on its own — step by step — while showing you its plan and the changes it wants to make.
@@ -51,7 +54,15 @@ Two backends, switchable from the same panel or via `hearth.provider`:
 - Node.js + npm (to build).
 
 ## Installing it
-Hearth isn't published to the Marketplace — install it from source:
+Hearth isn't on the VS Code Marketplace yet — grab it from [Releases](https://github.com/pawel2jarzembowski-oss/hearth/releases/latest):
+
+1. Download `hearth-0.2.0.vsix` from the latest release.
+2. In VS Code: **Extensions** view → `...` menu (top right) → **Install from VSIX...** → pick the downloaded file.
+   (Or from a terminal: `code --install-extension hearth-0.2.0.vsix`)
+3. Reload VS Code, open a project folder, and click the flame icon in the activity bar (or the status bar item at the bottom) to start chatting.
+
+### Building from source
+Prefer to build it yourself, or want to hack on it?
 
 ```bash
 git clone https://github.com/pawel2jarzembowski-oss/hearth.git
@@ -62,9 +73,6 @@ npx @vscode/vsce package --allow-missing-repository
 code --install-extension hearth-0.2.0.vsix
 ```
 
-Reload VS Code, then open the flame icon in the activity bar (or the status bar item at the bottom) to start chatting. Open a project folder in that window first — that's what the agent will work on.
-
-### Developing
 Press **F5** in this folder to launch an Extension Development Host with your changes loaded live. Run `npm test` to run the test suite (`node`'s built-in test runner, no extra dependencies — covers the diff algorithm, path-traversal safety, and both streaming backends against fake local servers).
 
 ## Settings
