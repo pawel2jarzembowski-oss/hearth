@@ -5,6 +5,7 @@
   "version": "0.2.0",
   "publisher": "promilek",
   "author": "Promilek",
+  "icon": "media/logo-128.png",
   "license": "MIT",
   "repository": {
     "type": "git",
