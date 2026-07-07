@@ -1,7 +1,7 @@
 {
   "name": "hearth",
   "displayName": "Hearth",
-  "description": "A local-first coding agent for VS Code powered by Ollama (qwen3:14b), with an optional cloud fallback. Live task plan, streamed replies, granular permissions — an agentic loop like Claude Code, but 100% local by default.",
+  "description": "A local-first autonomous coding agent for VS Code powered by Ollama (qwen3:14b), with an optional cloud fallback. Live task plan, streamed replies, granular permissions, 100% local by default.",
   "version": "0.2.0",
   "publisher": "promilek",
   "author": "Promilek",

@@ -3,11 +3,11 @@
 [![Latest Release](https://img.shields.io/github/v/release/pawel2jarzembowski-oss/hearth)](https://github.com/pawel2jarzembowski-oss/hearth/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A local-first coding agent for VS Code — like Claude Code, but it lives at home. Hearth runs on your own [Ollama](https://ollama.com) model by default (no API key, nothing leaves your machine), with an optional one-click switch to a cloud OpenAI-compatible provider when you want a stronger model.
+A local-first autonomous coding agent for VS Code — it lives at home instead of in the cloud. Hearth runs on your own [Ollama](https://ollama.com) model by default (no API key, nothing leaves your machine), with an optional one-click switch to a cloud OpenAI-compatible provider when you want a stronger model.
 
-It uses a Claude-Code-style agentic loop: the model reads files, writes files, and runs commands on its own — step by step — while showing you its plan and the changes it wants to make.
+It runs a fully agentic loop: the model reads files, writes files, and runs commands on its own — step by step — while showing you its plan and the changes it wants to make.
 
-## Agent tools (10, just like Claude Code)
+## Agent tools (10 of them)
 - `list_files` — list a directory
 - `find_files` — find files by glob pattern (e.g. `**/*.py`)
 - `search_text` — search text/regex across files (grep)
@@ -26,7 +26,7 @@ It uses a Claude-Code-style agentic loop: the model reads files, writes files, a
 - **Collapsible tool cards** — every tool call is one clickable card (icon + name + argument preview) that expands to show the full arguments and result, if you want to check.
 - **Change summary** — after finishing a task, the agent lists every file it touched; click a path to open it in the editor, on your terms.
 - **Status bar indicator** in VS Code shows live whether the backend is reachable and whether the agent is currently working.
-- **Attach files as context** — the 📎 button opens a file picker; attached files are prepended to your next message and shown as removable chips, like adding context in Claude Code.
+- **Attach files as context** — the 📎 button opens a file picker; attached files are prepended to your next message and shown as removable chips.
 - **Ask mode when you want it** — set a permission category to `ask` and that category's changes show a card in the chat (with a diff for write/edit) with Approve/Reject buttons before anything happens.
 - **Everything lives in the chat panel** — models, API key, permissions, and usage are all a click on the ⚙ gear away, rendered as a filterable settings list right there in the webview. No native VS Code Quick Pick/input-box dialogs, no toast notifications in the corner — status and errors show up as a small notice banner right above where you type.
 
