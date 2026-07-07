@@ -1,0 +1,226 @@
+{
+  "name": "hearth",
+  "displayName": "Hearth",
+  "description": "A local-first coding agent for VS Code powered by Ollama (qwen3:14b), with an optional cloud fallback. Live task plan, streamed replies, granular permissions — an agentic loop like Claude Code, but 100% local by default.",
+  "version": "0.2.0",
+  "publisher": "promilek",
+  "author": "Promilek",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pawel2jarzembowski-oss/hearth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pawel2jarzembowski-oss/hearth/issues"
+  },
+  "homepage": "https://github.com/pawel2jarzembowski-oss/hearth#readme",
+  "keywords": [
+    "ai",
+    "agent",
+    "ollama",
+    "local-first",
+    "coding-assistant",
+    "llm"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "AI",
+    "Chat",
+    "Programming Languages"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "hearth-container",
+          "title": "Hearth",
+          "icon": "media/flame.svg"
+        }
+      ]
+    },
+    "views": {
+      "hearth-container": [
+        {
+          "type": "webview",
+          "id": "hearth.chatView",
+          "name": "Chat"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "hearth.openChat",
+        "title": "Hearth: Open Chat"
+      },
+      {
+        "command": "hearth.newConversation",
+        "title": "Hearth: New Conversation",
+        "icon": "$(add)"
+      },
+      {
+        "command": "hearth.openInEditor",
+        "title": "Hearth: Open as Editor Window",
+        "icon": "$(multiple-windows)"
+      },
+      {
+        "command": "hearth.manageModels",
+        "title": "Hearth: Manage Models",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "hearth.setApiKey",
+        "title": "Hearth: Set API Key",
+        "icon": "$(key)"
+      },
+      {
+        "command": "hearth.managePermissions",
+        "title": "Hearth: Permissions",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "hearth.showUsage",
+        "title": "Hearth: Usage",
+        "icon": "$(graph-line)"
+      },
+      {
+        "command": "hearth.openSettings",
+        "title": "Hearth: Settings",
+        "icon": "$(settings-gear)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "hearth.openInEditor",
+          "when": "view == hearth.chatView",
+          "group": "navigation@1"
+        },
+        {
+          "command": "hearth.newConversation",
+          "when": "view == hearth.chatView",
+          "group": "navigation@2"
+        },
+        {
+          "command": "hearth.manageModels",
+          "when": "view == hearth.chatView",
+          "group": "1_settings@1"
+        },
+        {
+          "command": "hearth.setApiKey",
+          "when": "view == hearth.chatView",
+          "group": "1_settings@2"
+        },
+        {
+          "command": "hearth.managePermissions",
+          "when": "view == hearth.chatView",
+          "group": "1_settings@3"
+        },
+        {
+          "command": "hearth.showUsage",
+          "when": "view == hearth.chatView",
+          "group": "1_settings@4"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Hearth",
+      "properties": {
+        "hearth.provider": {
+          "type": "string",
+          "enum": [
+            "ollama",
+            "openai"
+          ],
+          "enumDescriptions": [
+            "Run fully locally against your own Ollama instance (default, no API key needed).",
+            "Use a cloud OpenAI-compatible API instead. Set the key with the \"Hearth: Set API Key\" command."
+          ],
+          "default": "ollama",
+          "description": "Which backend the agent talks to."
+        },
+        "hearth.endpoint": {
+          "type": "string",
+          "default": "http://localhost:11434",
+          "description": "Ollama server address (service endpoint). Only used when provider is \"ollama\"."
+        },
+        "hearth.model": {
+          "type": "string",
+          "default": "qwen3:14b",
+          "description": "Name of the Ollama model used by the agent. Change it via \"Hearth: Manage Models\" or here directly."
+        },
+        "hearth.openaiBaseUrl": {
+          "type": "string",
+          "default": "https://api.openai.com/v1",
+          "description": "Base URL of the OpenAI-compatible API. Only used when provider is \"openai\" (works with OpenAI, OpenRouter, Groq, and similar)."
+        },
+        "hearth.cloudModel": {
+          "type": "string",
+          "default": "gpt-4o-mini",
+          "description": "Model name to request from the cloud provider. Only used when provider is \"openai\"."
+        },
+        "hearth.maxSteps": {
+          "type": "number",
+          "default": 40,
+          "description": "Maximum number of agent steps (tool calls) per request."
+        },
+        "hearth.permissions.write": {
+          "type": "string",
+          "enum": ["auto", "ask", "deny"],
+          "enumDescriptions": [
+            "The agent writes/edits files without asking.",
+            "Shows a diff to approve before every write or edit.",
+            "The agent is never allowed to write or edit files."
+          ],
+          "default": "auto",
+          "description": "What the agent can do with write_file / edit_file. Change quickly via \"Hearth: Permissions\"."
+        },
+        "hearth.permissions.delete": {
+          "type": "string",
+          "enum": ["auto", "ask", "deny"],
+          "enumDescriptions": [
+            "The agent deletes files/folders without asking.",
+            "Asks for confirmation before every delete.",
+            "The agent is never allowed to delete anything."
+          ],
+          "default": "auto",
+          "description": "What the agent can do with delete_file."
+        },
+        "hearth.permissions.command": {
+          "type": "string",
+          "enum": ["auto", "ask", "deny"],
+          "enumDescriptions": [
+            "The agent runs shell commands without asking.",
+            "Asks for confirmation before every command.",
+            "The agent is never allowed to run shell commands."
+          ],
+          "default": "auto",
+          "description": "What the agent can do with run_command."
+        },
+        "hearth.dailyBudgetUsd": {
+          "type": "number",
+          "default": 0,
+          "description": "Optional soft daily spend cap for the cloud provider, in USD (0 = disabled). Estimated from published list prices for recognized models — not a real balance check, and resets at midnight. You'll get a heads-up at 80% and again once it's crossed."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "@vscode/codicons": "^0.0.45"
+  }
+}

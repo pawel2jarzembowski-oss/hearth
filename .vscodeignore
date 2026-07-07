@@ -1,0 +1,9 @@
+.vscode/**
+src/**
+tests/**
+tsconfig.json
+**/*.map
+node_modules/@vscode/codicons/**
+!node_modules/@vscode/codicons/dist/codicon.css
+!node_modules/@vscode/codicons/dist/codicon.ttf
+!node_modules/@vscode/codicons/LICENSE
